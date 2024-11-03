@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
-const dbConfig = require("../config/db.config")
+const dbConfig = require("../config/db.config");
 const db = {};
 
 // Create sequelize object for db
@@ -15,9 +15,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     port: dbConfig.port,
     logging: false,
     dialectOptions: {
-        // ssl: {
-        //     require: dbConfig.SSL_MODE
-        // }
+        ssl: {
+            require: dbConfig.SSL_MODE,
+        },
     },
     pool: {
         max: dbConfig.pool.max,

@@ -1,7 +1,7 @@
 services:
   go-db:
     container_name: go-db
-    image: postgres:23-alpine
+    image: postgres:12-alpine
     environment:
       POSTGRES_PASSWORD: mysecretpassword
       POSTGRES_USER: postgres
@@ -32,7 +32,7 @@ services:
       DB_PASSWORD: mysecretpassword
       DB: postgres
       DB_DIALECT: postgres
-      DB_PORT: 5434
+      DB_PORT: 5432
       SSL_MODE: false
       NODE_ENV: development
     ports: 
