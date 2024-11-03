@@ -1,25 +1,25 @@
-const winston = require('winston');
+const winston = require("winston");
 
 // Logging
 const logger = winston.createLogger({
-    level: 'info',
+    level: "info",
+    
     // Use timestamp and printf to create a standard log format
     format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.printf(
-            (info) => `${info.timestamp} ${info.level}: ${info.message}`,
-        ),
+            (info) => `${info.timestamp} ${info.level}: ${info.message}`
+        )
     ),
-    
+
     // Log to the console
     transports: [
         new winston.transports.Console({
             format: winston.format.combine(
                 winston.format.colorize(),
-                winston.format.simple(),
+                winston.format.simple()
             ),
         }),
-        // new winston.transports.File({ filename: 'logs/app.log' }),
     ],
 });
 

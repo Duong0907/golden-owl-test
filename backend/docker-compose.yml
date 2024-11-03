@@ -10,7 +10,7 @@ services:
       - 5434:5432
     hostname: go-db
     # networks: 
-    #   - todo_express
+    #   - go-test
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     healthcheck:
@@ -33,16 +33,16 @@ services:
       DB: postgres
       DB_DIALECT: postgres
       DB_PORT: 5434
-      SSL_MODE: true
+      SSL_MODE: false
       NODE_ENV: development
     ports: 
       - 8080:8080
     # networks: 
-    #   - todo_express
+    #   - go-test
     depends_on:
       go-db:
         condition: service_healthy
 
 # networks: 
-#   todo_express: 
+#   go-test: 
 #     driver: bridge

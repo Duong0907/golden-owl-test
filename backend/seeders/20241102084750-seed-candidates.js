@@ -7,10 +7,11 @@ const Candidate = require("../models");
 module.exports = {
     async up(queryInterface, Sequelize) {
         const results = [];
-        const chunkSize = 1000; 
-        
+        const chunkSize = 1000;
+
         return new Promise((resolve, reject) => {
-            const readStream = fs.createReadStream("./dataset/diem_thi_thpt_2024.csv")
+            const readStream = fs
+                .createReadStream("./dataset/diem_thi_thpt_2024.csv")
                 .pipe(csv())
                 .on("data", async (data, index) => {
                     if (index == 0) {
@@ -29,13 +30,17 @@ module.exports = {
                             gdcd: Number(data.gdcd),
                             ma_ngoai_ngu: data.ma_ngoai_ngu,
                         });
-    
-                        // If the chunk reaches the chunkSize, insert and reset tempResults
+
+                        // If the chunk reaches the chunkSize, insert and reset results
                         if (results.length === chunkSize) {
                             readStream.pause(); // Pause reading while inserting
-    
+
                             try {
-                                await queryInterface.bulkInsert("candidates", results, {});
+                                await queryInterface.bulkInsert(
+                                    "candidates",
+                                    results,
+                                    {}
+                                );
                                 results.length = 0; // Clear the results array
                                 readStream.resume(); // Resume reading
                             } catch (error) {
@@ -45,17 +50,15 @@ module.exports = {
                         }
                     }
                 })
+
                 .on("end", async () => {
                     if (results.length > 0) {
                         try {
-                            for (let i = 0; i < results.length; i += chunkSize) {
-                                const chunk = results.slice(i, i + chunkSize);
-                                await queryInterface.bulkInsert(
-                                    "candidates",
-                                    chunk,
-                                    {}
-                                );
-                            }
+                            await queryInterface.bulkInsert(
+                                "candidates",
+                                results,
+                                {}
+                            );
                             resolve();
                         } catch (error) {
                             console.error(error);

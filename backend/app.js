@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const setupRouter = require('./src/routes/index.js');
 // const errorHandler = require('./src/middlewares/errorHandling.middlware.js');
-// const bodyParser = require("body-parser");
 
 const {
     logger,
@@ -31,10 +30,7 @@ setupRouter(app);
 // Error hanlding
 // app.use(errorHandler);
 
-// port
 const PORT = process.env.PORT || 8080;
-
-// server
 db.sequelize.sync({ force: false }).then(() => {
     app.listen(PORT, () => {
         logger.log("info", `App listening on port ${PORT}!`);
